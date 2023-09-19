@@ -1,0 +1,19 @@
+/* PhotoGallery.css */
+
+/* Style for the image container */
+.photo-container {
+  margin: 10px;
+  /* border: 1px solid #ddd; */
+  padding: 10px;
+  
+}
+
+/* Style for the image itself */
+.photo-image {
+  max-width: 300px;
+  height: auto;
+}
+.photo-image:hover{
+    filter: opacity(.9);
+}
+
