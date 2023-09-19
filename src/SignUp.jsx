@@ -86,6 +86,4 @@ export default SignUp;
 
 
 
-<Link to="/">
-  <span id="SignUpLink">To Login</span>
-</Link>;
+
