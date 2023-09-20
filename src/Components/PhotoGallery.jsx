@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { TouchBackend } from "react-dnd-touch-backend"; // Import TouchBackend for mobile
 import "./PhotoGallery.css";
 
 // Define a draggable photo component
-const DraggablePhoto = ({ photo, index, movePhoto }) => {
+const DraggablePhoto = ({ photo, index, movePhoto, isMobile }) => {
   const [, ref] = useDrag({
     type: "PHOTO",
     item: { index },
@@ -20,11 +21,13 @@ const DraggablePhoto = ({ photo, index, movePhoto }) => {
     },
   });
 
+  const containerClass = `photo-container ${isMobile ? "mobile" : ""}`; // Apply a "mobile" class for mobile devices
+
   return (
     <div
-      className="photo-container"
+      className={containerClass}
       ref={(node) => ref(drop(node))}
-      style={{ cursor: "move" }}
+      style={{ cursor: isMobile ? "grab" : "move" }} // Use "grab" cursor for mobile
     >
       <img className="photo-image" src={photo} alt={`Photo ${index}`} />
     </div>
@@ -42,6 +45,8 @@ const PhotoGallery = () => {
     // Add more image paths here
   ]);
 
+  const isMobile = window.innerWidth <= 768; // Check if the screen width is less than or equal to 768px (you can adjust this value)
+
   const movePhoto = (fromIndex, toIndex) => {
     const updatedPhotos = [...photos];
     const [movedPhoto] = updatedPhotos.splice(fromIndex, 1);
@@ -49,30 +54,29 @@ const PhotoGallery = () => {
     setPhotos(updatedPhotos);
   };
 
-
   return (
     <>
       <div>
         <h2 style={{ textAlign: "center" }}>Photo Gallery</h2>
         <hr />
-        <DndProvider backend={HTML5Backend}>
-          
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                justifyContent: "space-evenly",
-              }}
-            >
-              {photos.map((photo, index) => (
-                <DraggablePhoto
-                  key={index}
-                  photo={photo}
-                  index={index}
-                  movePhoto={movePhoto}
-                />
-              ))}
-            </div>
+        <DndProvider backend={isMobile ? TouchBackend : HTML5Backend}>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "space-evenly",
+            }}
+          >
+            {photos.map((photo, index) => (
+              <DraggablePhoto
+                key={index}
+                photo={photo}
+                index={index}
+                movePhoto={movePhoto}
+                isMobile={isMobile}
+              />
+            ))}
+          </div>
         </DndProvider>
       </div>
     </>

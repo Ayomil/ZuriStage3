@@ -1,11 +1,18 @@
-/* PhotoGallery.css */
+
+
+/* Style for the image itself */
+
+.photo-image:hover{
+    filter: opacity(.9);
+}
 
 /* Style for the image container */
 .photo-container {
   margin: 10px;
-  /* border: 1px solid #ddd; */
+  border: 1px solid #ddd;
   padding: 10px;
-  
+  display: inline-block;
+  transition: transform 0.2s ease; /* Add a smooth transition for better visual feedback */
 }
 
 /* Style for the image itself */
@@ -13,7 +20,9 @@
   max-width: 300px;
   height: auto;
 }
-.photo-image:hover{
-    filter: opacity(.9);
-}
 
+/* Style for the image container when dragging */
+.photo-container.dragging {
+  transform: scale(1.1); /* Increase size when dragging */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Add a shadow when dragging */
+}
