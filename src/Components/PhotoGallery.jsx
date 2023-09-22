@@ -19,6 +19,7 @@ const DraggablePhoto = ({ photo, index, movePhoto }) => {
       }
     },
   });
+  const name = photo.replace(/\.[^/.]+$/, "");
 
   return (
     <div
@@ -26,7 +27,7 @@ const DraggablePhoto = ({ photo, index, movePhoto }) => {
       ref={(node) => ref(drop(node))}
       style={{ cursor: "move" }}
     >
-      <h3 style={{textAlign:"center"}}>{`Photo ${index}`}</h3>
+      <h3 style={{textAlign:"center"}}>{`${name}`}</h3>
       <img className="photo-image" src={photo} alt={`Photo ${index}`} />
     </div>
   );
@@ -34,12 +35,12 @@ const DraggablePhoto = ({ photo, index, movePhoto }) => {
 
 const PhotoGallery = () => {
   const [photos, setPhotos] = useState([
-    "1.jpg",
-    "2.jpg",
-    "3.jpg",
-    "4.jpg",
-    "5.jpg",
-    "6.jpg",
+    "Car.jpg",
+    "Apartment1.jpg",
+    "Abstract.jpg",
+    "City.jpg",
+    "Tunnel.jpg",
+    "Apartment2.jpg",
     // Add more image paths here
   ]);
 
